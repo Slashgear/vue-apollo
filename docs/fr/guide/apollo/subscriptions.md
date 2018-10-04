@@ -1,10 +1,10 @@
-# Subscriptions
+# Souscriptions
 
-## Setup
+## Installation
 
-*For the server implementation, you can take a look at [this simple example](https://github.com/Akryum/apollo-server-example).*
+*Pour l'implémentation du serveur, vous pouvez jeter un coup d'oeil à [cet exemple simple](https://github.com/Akryum/apollo-server-example).*
 
-To enable the websocket-based subscription, a bit of additional setup is required:
+Pour activer l'abonnement basé sur Websocket, un peu de configuration supplémentaire est nécessaire:
 
 ```
 npm install --save apollo-link-ws apollo-utilities
@@ -15,7 +15,7 @@ import Vue from 'vue'
 import { ApolloClient } from 'apollo-client'
 import { HttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
-// New Imports
+// nouveaux imports
 import { split } from 'apollo-link'
 import { WebSocketLink } from 'apollo-link-ws'
 import { getMainDefinition } from 'apollo-utilities'
@@ -23,11 +23,11 @@ import { getMainDefinition } from 'apollo-utilities'
 import VueApollo from 'vue-apollo'
 
 const httpLink = new HttpLink({
-  // You should use an absolute URL here
+  // Vous devriez utiliser une URL absolue ici
   uri: 'http://localhost:3020/graphql',
 })
 
-// Create the subscription websocket link
+// Créer le lien d'abonnement websocket
 const wsLink = new WebSocketLink({
   uri: 'ws://localhost:3000/subscriptions',
   options: {
@@ -35,10 +35,10 @@ const wsLink = new WebSocketLink({
   },
 })
 
-// using the ability to split links, you can send data to each link
-// depending on what kind of operation is being sent
+// en utilisant la possibilité de fractionner des liens, vous pouvez envoyer des données à chaque lien
+// en fonction du type d'opération envoyé
 const link = split(
-  // split based on operation type
+  // scission en fonction du type d'opération
   ({ query }) => {
     const { kind, operation } = getMainDefinition(query)
     return kind === 'OperationDefinition' &&
@@ -48,14 +48,14 @@ const link = split(
   httpLink
 )
 
-// Create the apollo client
+// Créer le client apollo
 const apolloClient = new ApolloClient({
   link,
   cache: new InMemoryCache(),
   connectToDevTools: true,
 })
 
-// Install the vue plugin like before
+// Installez le plugin vue comme avant
 Vue.use(VueApollo)
 ```
 

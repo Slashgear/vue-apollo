@@ -66,7 +66,7 @@ yarn add vue-apollo graphql apollo-client apollo-link apollo-link-http apollo-ca
 
 ### Le client Apollo
 
-In your app, create an `ApolloClient` instance and install the `VueApollo` plugin:
+Dans votre applicatio, créer une instance d'`ApolloClient` et installer le plugin `VueApollo`:
 
 ```js
 import Vue from 'vue'
@@ -76,11 +76,11 @@ import { InMemoryCache } from 'apollo-cache-inmemory'
 import VueApollo from 'vue-apollo'
 
 const httpLink = new HttpLink({
-  // You should use an absolute URL here
+  // Vous devez utiliser une URL absolue ici
   uri: 'http://localhost:3020/graphql',
 })
 
-// Create the apollo client
+// Créer le client apollo
 const apolloClient = new ApolloClient({
   link: httpLink,
   cache: new InMemoryCache(),
@@ -91,13 +91,13 @@ const apolloProvider = new VueApollo({
   defaultClient: apolloClient,
 })
 
-// Install the vue plugin
+// Installer le plugin Vue
 Vue.use(VueApollo)
 ```
 
 ## Le provider Apollo
 
-The provider holds the Apollo client instances that can then be used by all the child components. Inject it into your components with `provide`:
+Le provider contient le client Apollo qui peut alors être utilisé par tous les composants enfants. Injecter le dans vos composants avec `provide`:
 
 ```js
 new Vue({

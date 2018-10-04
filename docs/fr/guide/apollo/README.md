@@ -1,51 +1,51 @@
-# Apollo in Vue components
+# Apollo dans les composants Vue
 
-To declare apollo queries in your Vue component, add an `apollo` object :
+Pour déclarer vos requêtes dans vos composants Vue, ajoutez un objet `apollo`:
 
 ```js
 new Vue({
     apollo: {
-        // Apollo specific options
+        // Options spécifiques à Apollo
     },
 })
 ```
 
 You can access the [apollo-client](https://www.apollographql.com/docs/react/) instances with `this.$apollo.provider.defaultClient` or `this.$apollo.provider.clients.<key>` (for [Multiple clients](../multiple-clients.md)) in all your vue components.
 
-## Queries
+## Les requêtes
 
-In the `apollo` object, add an attribute for each property you want to feed with the result of an Apollo query.
+Dans l'objet `apollo`, ajouter un attribut pour toutes les propriétés que vous souhaitez alimenter par le résultat de votre requête Apollo.
 
 ```js
 import gql from 'graphql-tag'
 
 export default {
   apollo: {
-    // Simple query that will update the 'hello' vue property
+    // Cette requête simple mettra à jour la propriété 'hello' du composant
     hello: gql`query { hello }`,
   },
 }
 ```
 
-More details in the [Queries section](./queries.md).
+Plus de détails dans la [section Requêtes](./queries.md).
 
-## Mutations
+## Les mutations
 
-Use `this.$apollo.mutate` to send mutations:
+Utilisez `this.$apollo.mutate` pour déclencher vos mutations:
 
 ```js
 methods: {
   async addTag() {
-    // Call to the graphql mutation
+    // Appelle la mutation
     const result = await this.$apollo.mutate({
-      // Query
+      // La requête
       mutation: gql`mutation ($label: String!) {
         addTag(label: $label) {
           id
           label
         }
       }`,
-      // Parameters
+      // Les paramètres
       variables: {
         label: this.newTag,
       },
@@ -54,20 +54,20 @@ methods: {
 }
 ```
 
-More details in the [Mutations section](./mutations.md).
+Plus de détails dans la [section Mutations](./mutations.md).
 
-## Special options
+## Les options spéciales
 
-The special options begin with `$` in the `apollo` object.
+Les options spéciales commencent par un `$` dans l'objet `apollo`.
 
-- `$skip` to disable all queries and subscriptions (see below)
-- `$skipAllQueries` to disable all queries (see below)
-- `$skipAllSubscriptions` to disable all subscriptions (see below)
-- `$deep` to watch with `deep: true` on the properties above when a function is provided
-- `$error` to catch errors in a default handler (see `error` advanced options for smart queries)
-- `$query` to apply default options to all the queries in the component
+- `$skip` pour bloquer toutes les requêtes et souscriptions (voir plus bas)
+- `$skipAllQueries` pour bloquer toutes les requêtes (voir plus bas)
+- `$skipAllSubscriptions` pour bloquer toutes les souscriptions (voir plus bas)
+- `$deep` pour surveiller avec `deep: true` on the properties above when a function is provided
+- `$error` pour capturer les erreurs avec un comportement global (voir l'option avancée `error` pour les requêtes)
+- `$query` pour appliquer des options par défaut aux requêtes.
 
-Example:
+Exemple:
 
 ```vue
 <script>
@@ -88,13 +88,13 @@ export default {
 </script>
 ```
 
-You can define in the apollo provider a default set of options to apply to the `apollo` definitions. For example:
+Vous pouvez définir dans le provider apollo un ensemble d'options qui s'appliquent dans toutes les requêtes. Par exemple:
 
 ```js
 const apolloProvider = new VueApollo({
   defaultClient: apolloClient,
   defaultOptions: {
-    // apollo options applied to all queries in components
+    // Ces options s'appliquent dans toutes les requêtes de composant
     $query: {
       loadingKey: 'loading',
       fetchPolicy: 'cache-and-network',
@@ -103,9 +103,9 @@ const apolloProvider = new VueApollo({
 })
 ```
 
-## Skip all
+## Passer une requête
 
-You can disable all the queries for the component with `skipAllQueries`, all the subscriptions with `skipAllSubscriptions` and both with `skipAll`:
+Vous pouvez désactiver toutes les requêtes pour le composant avec `skipAllQueries`, toutes les souscriptions avec `skipAllSubscriptions` et les deux avec `skipAll`:
 
 ```js
 this.$apollo.skipAllQueries = true
@@ -113,7 +113,7 @@ this.$apollo.skipAllSubscriptions = true
 this.$apollo.skipAll = true
 ```
 
-You can also declare these properties in the `apollo` option of the component. They can be booleans:
+Vous pouvez aussi déclarer ces propriétés dans l'option `apollo` du composant. Elle peuvent être booléennes:
 
 ```js
 apollo: {
@@ -121,7 +121,7 @@ apollo: {
 }
 ```
 
-Or reactive functions:
+Ou des fonctions reactives:
 
 ```js
 apollo: {

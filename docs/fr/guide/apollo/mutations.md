@@ -1,49 +1,50 @@
 # Mutations
 
-Mutations are queries that change your data state on your apollo server.
 
-Use `this.$apollo.mutate()` to send a GraphQL mutation.
+Les mutations sont des requêtes qui modifient l'état de vos données sur votre serveur apollo.
 
-For more info, visit the [apollo doc](https://www.apollographql.com/docs/react/api/apollo-client.html#ApolloClient.mutate). There is a mutation-focused [example app](https://github.com/Akryum/vue-apollo-todos) you can look at.
+Utilisez `this.$apollo.mutate()` pour envoyer une mutation GraphQL.
 
-::: warning
-You shouldn't send the `__typename` fields in the variables, so it is not recommended to send an Apollo result object directly.
+Pour plus d'informations, visitez la [documentation apollo](https://www.apollographql.com/docs/react/api/apollo-client.html#ApolloClient.mutate). Vous pouvez consulter un [exemple d'application](https://github.com/Akryum/vue-apollo-todos) axé sur les mutations.
+
+:::warning
+Vous ne devriez pas envoyer les champs `__typename` dans les variables, il n'est donc pas recommandé d'envoyer directement un objet de résultat Apollo.
 :::
 
 ```js
 methods: {
   addTag() {
-    // We save the user input in case of an error
+    // Nous sauvegardons la saisie de l'utilisateur en cas d'erreur
     const newTag = this.newTag
-    // We clear it early to give the UI a snappy feel
+    // On nettoie le champ pour donner un effet dynamique à l'utilisateur
     this.newTag = ''
-    // Call to the graphql mutation
+    // appelle la mutation GraphQL
     this.$apollo.mutate({
-      // Query
+      // Requête
       mutation: gql`mutation ($label: String!) {
         addTag(label: $label) {
           id
           label
         }
       }`,
-      // Parameters
+      // Paramètres
       variables: {
         label: newTag,
       },
-      // Update the cache with the result
-      // The query will be updated with the optimistic response
-      // and then with the real result of the mutation
+      // Met à jour le cache avec le résultat
+      // La requête sera mise à jour avec la réponse optimiste
+      // puis avec le résultat réel de la mutation
       update: (store, { data: { addTag } }) => {
-        // Read the data from our cache for this query.
+        // Lis les données de notre cache pour cette requête.
         const data = store.readQuery({ query: TAGS_QUERY })
-        // Add our tag from the mutation to the end
+        // Ajoute notre tag de la mutation à la fin
         data.tags.push(addTag)
-        // Write our data back to the cache.
+        // Ecris nos données dans le cache.
         store.writeQuery({ query: TAGS_QUERY, data })
       },
-      // Optimistic UI
-      // Will be treated as a 'fake' result as soon as the request is made
-      // so that the UI can react quickly and the user be happy
+      // UI optimiste
+      // Sera traité comme un "faux" résultat dès que la demande sera faite
+      // afin que l'interface utilisateur puisse réagir rapidement et que l'utilisateur soit heureux
       optimisticResponse: {
         __typename: 'Mutation',
         addTag: {
@@ -53,19 +54,19 @@ methods: {
         },
       },
     }).then((data) => {
-      // Result
+      // Résultat
       console.log(data)
     }).catch((error) => {
-      // Error
+      // Erreur
       console.error(error)
-      // We restore the initial user input
+      // On restore l'état initial
       this.newTag = newTag
     })
   },
 },
 ```
 
-## Server-side example
+## Exemple côté serveur
 
 ```js
 export const schema = `
@@ -88,10 +89,10 @@ schema {
 }
 `
 
-// Fake word generator
+// Générateur de mots aléatoires
 import faker from 'faker'
 
-// Let's generate some tags
+// Générons des tags
 var id = 0
 var tags = []
 for (let i = 0; i < 42; i++) {

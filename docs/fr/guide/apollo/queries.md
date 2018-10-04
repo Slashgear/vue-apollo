@@ -1,38 +1,38 @@
-# Queries
+# Requêtes
 
-In the `apollo` object, add an attribute for each property you want to feed with the result of an Apollo query. Each one of them will become a Smart Query.
+Dans l'objet `apollo`, ajoutez un attribut à chaque propriété que vous souhaitez alimenter avec le résultat d'une requête Apollo. Chacun d'entre eux deviendra une requête smart.
 
-## Simple query
+## Une requête simple
 
-Use `gql` to write your GraphQL queries:
+Utilisez `gql` pour écrire vos requêtes GraphQL:
 
 ```js
 import gql from 'graphql-tag'
 ```
 
-Put the [gql](https://github.com/apollographql/graphql-tag) query directly as the value:
+Placez la requête [gql] (https://github.com/apollographql/graphql-tag) directement comme valeur:
 
 ```js
 apollo: {
-  // Simple query that will update the 'hello' vue property
+  // Requête simple qui mettra à jour la propriété 'hello' vue
   hello: gql`{hello}`,
 },
 ```
 
-You can then access the query with `this.$apollo.queries.<name>`.
+Vous pouvez ensuite accéder à la requête avec `this.$apollo.queries.<name>`.
 
-You can initialize the property in your vue component's `data` hook:
+Vous pouvez initialiser la propriété dans le hook `data` de votre composant vue:
 
 ```js
 data () {
   return {
-    // Initialize your apollo data
+    // Initialisez vos données apollo
     hello: '',
   },
 },
 ```
 
-Server-side, add the corresponding schema and resolver:
+Côté serveur, ajoutez le schéma et le résolveur correspondants:
 
 ```js
 export const schema = `
@@ -54,9 +54,9 @@ export const resolvers = {
 }
 ```
 
-For more info, visit the [apollo doc](https://www.apollographql.com/docs/apollo-server/).
+Pour plus d'informations, visitez la [documentation apollo] (https://www.apollographql.com/docs/apollo-server/).
 
-You can then use your property as usual in your vue component:
+Vous pouvez ensuite utiliser votre propriété comme d'habitude dans votre composant vue:
 
 ```vue
 <template>
@@ -69,20 +69,21 @@ You can then use your property as usual in your vue component:
 </template>
 ```
 
-## Query with parameters
+## Requête avec paramètres
 
-You can add variables (read parameters) to your `gql` query by declaring `query` and `variables` in an object:
+
+Vous pouvez ajouter des variables (paramètres de lecture) à votre requête `gql` en déclarant` query` et `variables` dans un objet:
 
 ```js
-// Apollo-specific options
+// Options spécifiques à Apollo
 apollo: {
-  // Query with parameters
+  // Requête avec paramètres
   ping: {
-    // gql query
+    // requête gql
     query: gql`query PingMessage($message: String!) {
       ping(message: $message)
     }`,
-    // Static parameters
+    // paramètres statiques
     variables: {
       message: 'Meow',
     },
@@ -90,14 +91,14 @@ apollo: {
 },
 ```
 
-You can use the apollo `watchQuery` options in the object, like:
- - `fetchPolicy`
- - `pollInterval`
- - ...
+Vous pouvez utiliser les options apollo `watchQuery` dans l'objet, comme par exemple:
+ - `fetchPolicy`
+ - `pollInterval`
+ - ...
 
-See the [apollo doc](https://www.apollographql.com/docs/react/api/apollo-client.html#ApolloClient.watchQuery) for more details.
+Voir la [documentation apollo] (https://www.apollographql.com/docs/react/api/apollo-client.html#ApolloClient.watchQuery) pour plus de détails.
 
-For example, you could add the `fetchPolicy` apollo option like this:
+Par exemple, vous pouvez ajouter l'option `fetchPolicy` apollo comme ceci:
 
 ```js
 apollo: {
@@ -109,13 +110,13 @@ apollo: {
     variables: {
       message: 'Meow'
     },
-    // Additional options here
+    // option
     fetchPolicy: 'cache-and-network',
   },
 },
 ```
 
-Again, you can initialize your property in your vue component:
+De nouveau, vous pouvez initialiser votre propriété dans votre composant vue:
 
 ```js
 data () {
@@ -148,7 +149,7 @@ export const resolvers = {
 }
 ```
 
-And then use it in your vue component:
+Et utilisez-le ensuite dans votre composant vue:
 
 ```vue
 <template>
@@ -161,37 +162,37 @@ And then use it in your vue component:
 </template>
 ```
 
-## Loading state
+## État de chargement
 
-You can display a loading state thanks to the `$apollo.loading` prop:
+Vous pouvez afficher un état de chargement grâce à `$apollo.loading`:
 
 ```vue
 <div v-if="$apollo.loading">Loading...</div>
 ```
 
-Or for this specific `ping` query:
+Ou pour cette requête spécifique `ping`:
 
 ```vue
 <div v-if="$apollo.queries.ping.loading">Loading...</div>
 ```
 
-## Option function
+## Fonction d'option
 
-You can use a function which will be called once when the component is created and it must return the option object:
+Vous pouvez utiliser une fonction qui sera appelée une fois lors de la création du composant. Elle doit renvoyer l'objet option:
 
 ```js
-// Apollo-specific options
+// Options spécifiques à Apollo
 apollo: {
-  // Query with parameters
+  // Requête avec paramètres
   ping () {
-    // This is called once when the component is created
-    // It must return the option object
+    // Ceci est appelé une fois lors de la création du composant
+    // Il doit renvoyer l'objet option
     return {
-      // gql query
+      // requête gql
       query: gql`query PingMessage($message: String!) {
         ping(message: $message)
       }`,
-      // Static parameters
+      // Paramètres statiques
       variables: {
         message: 'Meow',
       },
@@ -201,18 +202,19 @@ apollo: {
 ```
 
 ::: tip
-This also works for [subscriptions](./subscriptions.md).
+Cela fonctionne également pour [subscriptions] (./ subscriptions.md).
 :::
 
-## Reactive query definition
 
-You can use a function for the `query` option. This will update the graphql query definition automatically:
+## Définition de requête réactive
+
+Vous pouvez utiliser une fonction pour l'option `query`. Ceci mettra à jour automatiquement la définition de la requête graphql:
 
 ```js
-// The featured tag can be either a random tag or the last added tag
+// La balise sélectionnée peut être une balise aléatoire ou la dernière balise ajoutée.
 featuredTag: {
   query () {
-    // Here you can access the component instance with 'this'
+    // Ici, vous pouvez accéder à l'instance de composant avec 'this'
     if (this.showTag === 'random') {
       return gql`{
         randomTag {
@@ -231,21 +233,21 @@ featuredTag: {
       }`
     }
   },
-  // We need this to assign the value of the 'featuredTag' component property
+  // Nous avons besoin de cela pour assigner la valeur de la propriété du composant 'FeaturedTag'
   update: data => data.randomTag || data.lastTag,
 },
 ```
 
 ::: tip
-This also works for [subscriptions](./subscriptions.md).
+Cela fonctionne également pour [subscriptions] (./ subscriptions.md).
 :::
 
-## Reactive parameters
+## Paramètres réactifs
 
-Use a function instead to make the parameters reactive with vue properties:
+Utilisez plutôt une fonction pour rendre les paramètres réactifs avec les propriétés de vue:
 
 ```js
-// Apollo-specific options
+// Options spécifiques à Apollo
 apollo: {
   // Query with parameters
   ping: {
@@ -263,7 +265,7 @@ apollo: {
 },
 ```
 
-This will re-fetch the query each time a parameter changes, for example:
+Cela va extraire à nouveau la requête chaque fois qu'un paramètre est modifié, par exemple:
 
 ```vue
 <template>
@@ -277,28 +279,28 @@ This will re-fetch the query each time a parameter changes, for example:
 </template>
 ```
 
-## Skipping the query
+## Ignorer la requête
 
-If the query is skipped, it will disable it and the result will not be updated anymore. You can use the `skip` option:
+Si la requête est ignorée, elle sera désactivée et le résultat ne sera plus mis à jour. Vous pouvez utiliser l'option `skip`:
 
 ```js
-// Apollo-specific options
+// Options spécifiques à Apollo
 apollo: {
   tags: {
-    // GraphQL Query
+    // Requête GraphQL
     query: gql`query tagList ($type: String!) {
       tags(type: $type) {
         id
         label
       }
     }`,
-    // Reactive variables
+    // Variables reactive
     variables() {
       return {
         type: this.type,
       }
     },
-    // Disable the query
+    // Désactiver la requête
     skip() {
       return this.skipQuery
     },
@@ -306,20 +308,21 @@ apollo: {
 },
 ```
 
-Here, `skip` will be called automatically when the `skipQuery` component property changes.
 
-You can also access the query directly and set the `skip` property:
+Ici, skip sera appelé automatiquement lorsque la propriété du composant skipQuery sera modifiée.
+
+Vous pouvez également accéder directement à la requête et définir la propriété skip:
 
 ```js
 this.$apollo.queries.tags.skip = true
 ```
 
-## Reactive Query Example
+## Exemple de requête réactive
 
-Here is a reactive query example using polling:
+Voici un exemple de requête réactive utilisant polling:
 
 ```js
-// Apollo-specific options
+// Options spécifiques à Apollo
 apollo: {
   // 'tags' data property on vue instance
   tags: {
@@ -334,7 +337,7 @@ apollo: {
 },
 ```
 
-Here is how the server-side looks like:
+Voici à quoi ressemble le côté serveur:
 
 ```js
 export const schema = `
@@ -352,7 +355,7 @@ schema {
 }
 `
 
-// Fake word generator
+// Générateur de faux mots
 import casual from 'casual'
 
 // Let's generate some tags
@@ -380,22 +383,22 @@ export const resolvers = {
 }
 ```
 
-## Manually adding a smart Query
+## Ajouter manuellement une requête smart
 
-You can manually add a smart query with the `$apollo.addSmartQuery(key, options)` method:
+Vous pouvez ajouter manuellement une requête intelligente avec la méthode `$apollo.addSmartQuery(key, options)`:
 
 ```js
 created () {
   this.$apollo.addSmartQuery('comments', {
-    // Same options like above
+    // même options qu'au dessus
   })
 }
 ```
 
 ::: tip
-Internally, this method is called for each query entry in the component `apollo` option.
+En interne, cette méthode est appelée pour chaque entrée de requête dans l'option `apollo` du composant.
 :::
 
-## Advanced options
+## Options avancées
 
-There are even more options specific to vue-apollo, see the [API Reference](../../api/smart-query.md).
+Il y a encore plus d'options spécifiques à vue-apollo, voir [API Reference](../../api/smart-query.md).
